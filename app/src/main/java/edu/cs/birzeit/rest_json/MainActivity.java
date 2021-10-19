@@ -2,6 +2,7 @@ package edu.cs.birzeit.rest_json;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -69,6 +70,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         queue.add(request);
+
+    }
+
+    public void btnOpen_Click(View view) {
+        Intent intent  = new Intent(this, AddBookActivity.class);
+
+        startActivity(intent);
 
     }
 }

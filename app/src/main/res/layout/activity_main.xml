@@ -21,6 +21,14 @@
         android:id="@+id/edtCat"
         android:layout_margin="8dp"
         />
+
+    <Button
+        android:id="@+id/btnOpen"
+        android:layout_width="wrap_content"
+        android:onClick="btnOpen_Click"
+        android:layout_height="wrap_content"
+        android:text="Open" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
