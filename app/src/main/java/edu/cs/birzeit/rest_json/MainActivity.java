@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(MainActivity.this, error.toString(),
                         Toast.LENGTH_SHORT).show();
+                Log.d("Error_json", error.toString());
             }
         });
 
