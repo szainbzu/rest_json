@@ -22,12 +22,7 @@
         android:layout_margin="8dp"
         />
 
-    <Button
-        android:id="@+id/btnOpen"
-        android:layout_width="wrap_content"
-        android:onClick="btnOpen_Click"
-        android:layout_height="wrap_content"
-        android:text="Open" />
+
 
     <Button
         android:layout_width="match_parent"
@@ -37,6 +32,12 @@
         android:onClick="btnSearch_Click"
         android:layout_marginBottom="10dp"
         />
+    <Button
+        android:id="@+id/btnOpen"
+        android:layout_width="wrap_content"
+        android:onClick="btnOpen_Click"
+        android:layout_height="wrap_content"
+        android:text="Open" />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

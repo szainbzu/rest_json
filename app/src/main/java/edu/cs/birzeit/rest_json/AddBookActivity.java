@@ -10,10 +10,14 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,54 +44,50 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
     private void addBook(String title, String category, String pages){
-        String url = "http://10.0.2.2:84/rest/addbook_json.php";
+        String url = "http://10.0.2.2:5000/create";
+
         RequestQueue queue = Volley.newRequestQueue(AddBookActivity.this);
-        StringRequest request = new StringRequest(Request.Method.POST, url, new com.android.volley.Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.e("TAG", "RESPONSE IS " + response);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    // on below line we are displaying a success toast message.
-                    Toast.makeText(AddBookActivity.this,
-                            jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+
+
+
+        JSONObject jsonParams = new JSONObject();
+        try {
+            jsonParams.put("title", title);
+            jsonParams.put("category", category);
+            jsonParams.put("pages", pages);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
+        // Create a JsonObjectRequest with POST method
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                jsonParams,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String str = "";
+                        try {
+                            str = response.getString("result");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        Toast.makeText(AddBookActivity.this, str,
+                                Toast.LENGTH_SHORT).show();
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("VolleyError", error.toString());
+                    }
                 }
-
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // method to handle errors.
-                Toast.makeText(AddBookActivity.this,
-                        "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            public String getBodyContentType() {
-                // as we are passing data in the form of url encoded
-                // so we are passing the content type below
-                return "application/x-www-form-urlencoded; charset=UTF-8";
-            }
-
-            @Override
-            protected Map<String, String> getParams() {
-
-                // below line we are creating a map for storing
-                // our values in key and value pair.
-                Map<String, String> params = new HashMap<String, String>();
-
-                // on below line we are passing our
-                // key and value pair to our parameters.
-                params.put("title", title);
-                params.put("cat", category);
-                params.put("pages", pages);
-
-                // at last we are returning our params.
-                return params;
-            }
-        };
+        );
         // below line is to make
         // a json object request.
         queue.add(request);

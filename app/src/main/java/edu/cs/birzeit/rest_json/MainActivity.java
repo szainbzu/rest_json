@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         EditText edtCat = findViewById(R.id.edtCat);
         ListView lst = findViewById(R.id.lstBooks);
         String cat = edtCat.getText().toString();
-        String url = "http://10.0.2.2:84/rest/info_json.php?cat=" + cat;
-
+        //String url = "http://10.0.2.2:84/rest/info_json.php?cat=" + cat;
+        String url = "http://10.0.2.2:5000/getbook/"+cat;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,
                 null, new Response.Listener<JSONArray>() {
             @Override
